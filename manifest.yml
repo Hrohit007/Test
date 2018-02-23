@@ -1,0 +1,16 @@
+ 
+  #DEVELOPEMENT
+applications:
+- name: CabBookingPortal-microservice
+  host: CabBookingPortal-microservice
+  memory: 512M
+  timeout: 180
+  path: target/cabDemo-0.0.1-SNAPSHOT.jar
+  buildpack: java-buildpack
+  env:
+     EVENTHUB_ENABLE_DEBUG: true
+     _JAVA_OPTIONS: -Dlogging.level.org.springframework=INFO
+  instances: 1
+  services:
+    - cabbookingdatabase2.0
+  
