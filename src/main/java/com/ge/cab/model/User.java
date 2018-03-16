@@ -111,7 +111,7 @@ public class User {
 	}
 	@JsonProperty("applicationName")
 	public String getApplicationName() {
-		return lastname;
+		return applicationName;
 	}
 	@JsonProperty("applicationName")
 	public void setApplicationName(String applicationName) {
