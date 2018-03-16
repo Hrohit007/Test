@@ -32,12 +32,12 @@ public class UserController {
 /*	@Autowired
 	private SessionService sessionService;*/
 
-	@RequestMapping(method= RequestMethod.GET,value="/getAllUsers")
-	public ResponseEntity<?> getAllUsers(){
+	@RequestMapping(method= RequestMethod.GET,value="/getAllUsers/{applicationName}")
+	public ResponseEntity<?> getAllUsers(@PathVariable String applicationName){
 		logger.info("Fetching details of all users");
 		List<User> list=null;
 		try {
-			list=userservice.fetchAllUsers();
+			list=userservice.fetchAllUsers(applicationName);
 		}	
 		catch(Exception e) {
 			logger.error("Exception occured while getting User details.");
@@ -47,12 +47,12 @@ public class UserController {
 		return new ResponseEntity<>(list,HttpStatus.OK);		
 	}
 
-	@RequestMapping(method= RequestMethod.GET,value="/getSingleUser/{Sso}")
-	public ResponseEntity<?> getSingleUser(@PathVariable long Sso){
+	@RequestMapping(method= RequestMethod.GET,value="/getSingleUser/{Sso}/{applicationName}")
+	public ResponseEntity<?> getSingleUser(@PathVariable long Sso,@PathVariable String applicationName){
 		logger.info("Fetching details of a user.");
 		User result;
 		try {
-			result=userservice.getSingleUserBySso(Sso);
+			result=userservice.getSingleUserBySsoAndApplicationName(Sso,applicationName);
 			if(result.getSso()==0)
 				return new ResponseEntity<>(new JsonResponse().convertToJson("User does not exist.Please register!"),HttpStatus.BAD_REQUEST);
 		}catch (java.lang.NullPointerException e) {

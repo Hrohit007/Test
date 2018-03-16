@@ -15,16 +15,16 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public List<User> fetchAllUsers(){
+	public List<User> fetchAllUsers(String applicationName){
 		List<User> users = new ArrayList<>();
-		userRepository.findAll().forEach(users::add);
+		userRepository.findByApplicationName(applicationName).forEach(users::add);
 		logger.info("In getAllusers function"+users);
 		return users;
 	}
 
 	public String addNewUser(User user) throws NullPointerException,NoSuchFieldError{
 
-		User existingUser= userRepository.findOne(user.getSso());
+		User existingUser= userRepository.findBySsoAndApplicationName(user.getSso(),user.getApplicationName());
 		if(!userRepository.exists(user.getSso()))
 		{
 			logger.info("In adduser function"+user);
@@ -57,7 +57,7 @@ public class UserService {
 	public String userAuthentication(User input) {
 		long s=input.getSso();
 		String pwd=input.getPassword();
-		User id1=userRepository.findOne(s);
+		User id1=userRepository.findBySsoAndApplicationName(s,input.getApplicationName());
 		if(id1!=null)
 		{
 			if(id1.getPassword().equals(pwd))
@@ -71,7 +71,7 @@ public class UserService {
 
 	public String userLogin(User input) {
 		logger.info("In login function of userservice");
-			User user=userRepository.findOne(input.getSso());
+			User user=userRepository.findBySsoAndApplicationName(input.getSso(),input.getApplicationName());
 			if(user!=null)
 				return userLogin(user,input);		
 		return "{ \"response\": \"Please Register\" }";
@@ -100,8 +100,8 @@ public class UserService {
 	}
 
 
-	public User getSingleUserBySso(long sso) {
-		User user=userRepository.findOne(sso);
+	public User getSingleUserBySsoAndApplicationName(long sso,String applicationName) {
+		User user=userRepository.findBySsoAndApplicationName(sso,applicationName);
 		logger.info("get single user function"+user);
 		return user;
 	}

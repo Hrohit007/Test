@@ -9,5 +9,9 @@ import com.ge.cab.model.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
 	List<User> findBySsoAndContactNo(long sso, long contactNo);
+
+	User findBySsoAndApplicationName(long sso, String applicationName);
+
+	List<User> findByApplicationName(String applicationName);
 }
 	

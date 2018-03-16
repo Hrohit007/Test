@@ -18,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"contactNo",
 	"password",
 	"emailid",
-	"isPasswordUpdated"
+	"isPasswordUpdated",
+	"applicationName"
 })					
 @Entity
 @Table(name = "users")
@@ -41,7 +42,9 @@ public class User {
 	@Column(name="isPasswordUpdated",columnDefinition= "boolean default 'false'")
 	@JsonProperty("isPasswordUpdated")
 	private boolean isPasswordUpdated;
-
+	@Column(name="applicationName")
+	@JsonProperty("applicationName")
+	private String applicationName;
 	@Column(name="password")
 	private String password;
 
@@ -105,6 +108,14 @@ public class User {
 	@JsonProperty("isPasswordUpdated")
 	public void setIsPasswordUpdated(boolean isUpdated) {
 		this.isPasswordUpdated = isUpdated;
+	}
+	@JsonProperty("applicationName")
+	public String getApplicationName() {
+		return lastname;
+	}
+	@JsonProperty("applicationName")
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
 	}
 }
 
